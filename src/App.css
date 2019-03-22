@@ -40,4 +40,5 @@
 }
 
 .text-boxes {
+  scroll-snap-type: proximity;
 }

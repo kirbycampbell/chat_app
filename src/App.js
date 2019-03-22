@@ -15,18 +15,6 @@ class App extends Component {
     conversation: []
   };
 
-  scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-  };
-
-  componentDidMount() {
-    this.scrollToBottom();
-  }
-
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
-
   subscription = API.graphql(
     graphqlOperation(subscriptions.onCreatePost)
   ).subscribe({
@@ -50,7 +38,7 @@ class App extends Component {
     this.setState({
       conversation: sortedThread
     });
-    console.log(allPosts);
+    console.log("query called");
   };
 
   typing = event => {
@@ -69,7 +57,21 @@ class App extends Component {
       graphqlOperation(mutations.createPost, { input: postDeets })
     );
     this.setState({ message: "" });
+    this.scrollToBottom();
   };
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  };
+
+  componentDidMount() {
+    this.query();
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
 
   render() {
     return (
