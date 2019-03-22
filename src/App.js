@@ -27,17 +27,6 @@ class App extends Component {
     this.scrollToBottom();
   }
 
-  mutate = async () => {
-    const postDeets = {
-      title: "Msg1",
-      body: this.state.message,
-      createdAt: ""
-    };
-    const newPost = await API.graphql(
-      graphqlOperation(mutations.createPost, { input: postDeets })
-    );
-    console.log(newPost);
-  };
   subscription = API.graphql(
     graphqlOperation(subscriptions.onCreatePost)
   ).subscribe({
@@ -68,6 +57,18 @@ class App extends Component {
     this.setState({
       message: event.target.value
     });
+  };
+
+  mutate = async () => {
+    const postDeets = {
+      title: "Msg1",
+      body: this.state.message,
+      createdAt: ""
+    };
+    const newPost = await API.graphql(
+      graphqlOperation(mutations.createPost, { input: postDeets })
+    );
+    this.setState({ message: "" });
   };
 
   render() {

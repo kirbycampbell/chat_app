@@ -14,18 +14,6 @@
   scroll-snap-type: proximity;
 }
 
-.Chat-Box::after {
-  display: inline-block;
-  position: relative;
-  margin: 1%;
-  float: left;
-  width: 70%;
-  height: 70vh;
-  background-color: lightgrey;
-  overflow: auto;
-  scroll-snap-align: end;
-}
-
 .Friend-Box {
   display: inline-block;
   position: relative;
