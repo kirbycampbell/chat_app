@@ -57,7 +57,6 @@ class App extends Component {
       graphqlOperation(mutations.createPost, { input: postDeets })
     );
     this.setState({ message: "" });
-    this.scrollToBottom();
   };
 
   scrollToBottom = () => {
@@ -100,8 +99,11 @@ class App extends Component {
             onChange={this.typing}
           />
         </div>
-        <button onClick={this.mutate}>Mutate</button>
-        <button onClick={this.query}>Query</button>
+        <div className="sendBar">
+          <button className="send-btn" onClick={this.mutate}>
+            Send
+          </button>
+        </div>
       </div>
     );
   }

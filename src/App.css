@@ -8,7 +8,7 @@
   margin: 1%;
   float: left;
   width: 70%;
-  height: 70vh;
+  height: 64vh;
   background-color: lightgrey;
   overflow: auto;
   scroll-snap-type: proximity;
@@ -20,7 +20,7 @@
   margin: 1%;
   float: right;
   width: 25%;
-  height: 92%;
+  height: 87%;
   background-color: lightgrey;
 }
 
@@ -40,5 +40,38 @@
 }
 
 .text-boxes {
-  scroll-snap-type: proximity;
+  border: 0.5px solid rgba(0, 0, 0, 0.356);
+  width: 40%;
+  background: rgba(41, 233, 223, 0.39);
+  margin-left: 1%;
+  padding: 1%;
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+}
+
+.text-boxes:hover {
+  border: 0.5px solid rgba(33, 42, 82, 0.356);
+  background: rgba(49, 231, 222, 0.753);
+}
+
+.sendBar {
+  float: left;
+  width: 72%;
+  height: 5%;
+}
+
+.send-btn {
+  height: 100%;
+  width: 20%;
+  float: right;
+  font-size: 18px;
+  background: rgba(99, 99, 240, 0.616);
+  color: white;
+  border: 1.5px solid rgba(0, 0, 0, 0.212);
+  border-radius: 38px;
+  margin-bottom: 20px;
+}
+
+.send-btn:hover {
+  background: rgb(128, 98, 211);
 }
