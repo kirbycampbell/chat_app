@@ -13,6 +13,7 @@ class App extends Component {
   state = {
     message: "",
     conversation: [],
+    users: [],
     username: "",
     password: ""
   };
@@ -29,6 +30,15 @@ class App extends Component {
       }))
   });
 
+  subscription = API.graphql(
+    graphqlOperation(subscriptions.onCreateUser)
+  ).subscribe({
+    next: newUser =>
+      this.setState(prevState => ({
+        users: [...prevState.users, newUser.value.data.onCreateUser]
+      }))
+  });
+
   query = async () => {
     let allPosts = await API.graphql(
       graphqlOperation(queries.listPosts, { limit: 100 })
@@ -41,7 +51,13 @@ class App extends Component {
     this.setState({
       conversation: sortedThread
     });
-    //console.log(sortedThread);
+    let allUsers = await API.graphql(
+      graphqlOperation(queries.listUsers, { limit: 10 })
+    );
+    console.log(allUsers);
+    this.setState({
+      users: allUsers.data.listUsers.items
+    });
   };
 
   typing = event => {
@@ -78,7 +94,8 @@ class App extends Component {
   handleUserSignUp = async () => {
     const userDeets = {
       name: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      createdAt: ""
     };
     await API.graphql(
       graphqlOperation(mutations.createUser, { input: userDeets })
@@ -108,6 +125,7 @@ class App extends Component {
           />
           <input
             name="password"
+            type="password"
             placeholder="Password"
             onChange={this.handleTyping}
           />
@@ -134,7 +152,13 @@ class App extends Component {
             }}
           />
         </div>
-        <div className="Friend-Box">Friend List</div>
+        <div className="Friend-Box">
+          {this.state.users.map(user => (
+            <div className="friend" key={user.id}>
+              {user.name}
+            </div>
+          ))}
+        </div>
         <div className="Type-Box">
           <textarea
             className="txtarea"

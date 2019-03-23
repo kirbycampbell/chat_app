@@ -105,3 +105,12 @@
   background: rgb(82, 47, 58);
   cursor: pointer;
 }
+
+.friend {
+  width: 94%;
+  border: 2px solid rgba(0, 0, 0, 0.438);
+  height: 3%;
+  background: rgba(43, 43, 94, 0.596);
+  padding: 5px;
+  color: white;
+}
