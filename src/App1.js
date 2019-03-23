@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import "./App1.css";
-import ApolloClient from "apollo-boost";
-import gql from "graphql-tag";
-import { ApolloProvider } from "react-apollo";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import awsmobile from "./aws-exports";
+import { withAuthenticator } from "aws-amplify-react"; // or 'aws-amplify-react-native';
+import * as queries from "./graphql/queries";
+import * as mutations from "./graphql/mutations";
+import * as subscriptions from "./graphql/subscriptions";
 
-const client = new ApolloClient();
+Amplify.configure(awsmobile);
 
 class App extends Component {
   state = {
@@ -173,4 +176,4 @@ class App extends Component {
     );
   }
 }
-export default App;
+export default withAuthenticator(App, false);
