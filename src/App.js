@@ -31,6 +31,7 @@ class App extends Component {
     let allPosts = await API.graphql(
       graphqlOperation(queries.listPosts, { limit: 100 })
     );
+    console.log(allPosts);
     let thread = allPosts.data.listPosts.items;
     let sortedThread = thread.sort((a, b) => {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -38,7 +39,7 @@ class App extends Component {
     this.setState({
       conversation: sortedThread
     });
-    console.log("query called");
+    //console.log(sortedThread);
   };
 
   typing = event => {
@@ -108,4 +109,4 @@ class App extends Component {
     );
   }
 }
-export default withAuthenticator(App, true);
+export default withAuthenticator(App, false);

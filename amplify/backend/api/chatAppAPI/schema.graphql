@@ -4,3 +4,18 @@ type Post @model {
   body: String!
   createdAt: String!
 }
+
+type Conversation @model {
+  id: ID!
+  users: [User!]
+  content: [Post]
+  createdBy: [User!]
+}
+
+type User @model {
+  id: ID!
+  name: String!
+  password: String!
+  createdAt: String!
+  conversations: [Conversation]
+}
