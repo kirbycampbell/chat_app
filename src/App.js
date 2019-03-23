@@ -116,6 +116,8 @@ class App extends Component {
     });
   };
 
+  setConvo = () => {};
+
   render() {
     return (
       <div className="App">
@@ -156,7 +158,7 @@ class App extends Component {
         </div>
         <div className="Friend-Box">
           {this.state.users.map(user => (
-            <div className="friend" key={user.id}>
+            <div onClick={this.setConvo} className="friend" key={user.id}>
               {user.name}
             </div>
           ))}
