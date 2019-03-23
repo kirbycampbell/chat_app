@@ -12,7 +12,9 @@ Amplify.configure(awsmobile);
 class App extends Component {
   state = {
     message: "",
-    conversation: []
+    conversation: [],
+    username: "",
+    password: ""
   };
 
   subscription = API.graphql(
@@ -54,7 +56,7 @@ class App extends Component {
       body: this.state.message,
       createdAt: ""
     };
-    const newPost = await API.graphql(
+    await API.graphql(
       graphqlOperation(mutations.createPost, { input: postDeets })
     );
     this.setState({ message: "" });
@@ -73,9 +75,50 @@ class App extends Component {
     this.scrollToBottom();
   }
 
+  handleUserSignUp = async () => {
+    const userDeets = {
+      name: this.state.username,
+      password: this.state.password
+    };
+    await API.graphql(
+      graphqlOperation(mutations.createUser, { input: userDeets })
+    );
+    this.setState({
+      username: "",
+      password: ""
+    });
+  };
+
+  handleTyping = event => {
+    let content = event.target.value;
+    let item = event.target.name;
+    this.setState({
+      [item]: content
+    });
+  };
+
   render() {
     return (
       <div className="App">
+        <div className="NavBar">
+          <input
+            name="username"
+            placeholder="UserName"
+            onChange={this.handleTyping}
+          />
+          <input
+            name="password"
+            placeholder="Password"
+            onChange={this.handleTyping}
+          />
+          <button
+            type="submit"
+            className="navitem1"
+            onClick={this.handleUserSignUp}
+          >
+            Sign Up
+          </button>
+        </div>
         <div className="Chat-Box">
           {this.state.conversation.map(convo => {
             return (
