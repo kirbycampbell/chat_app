@@ -1,61 +1,48 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "./graphql/mutations";
 
-class NavBar extends Component {
-  state = {
-    username: "",
-    password: "",
-    iAm: ""
-  };
+export default function NavBar() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [iAm, setIAm] = useState("");
 
-  handleUserSignUp = async () => {
-    const userDeets = {
-      name: this.state.username,
-      password: this.state.password,
+  const handleUserSignUp = async () => {
+    let userDeets = {
+      name: username,
+      password: password,
       createdAt: ""
     };
     await API.graphql(
       graphqlOperation(mutations.createUser, { input: userDeets })
     );
-    this.setState({
-      username: "",
-      password: "",
-      iAm: userDeets.name
-    });
+    setUsername("");
+    setPassword("");
+    setIAm(userDeets.name);
   };
 
-  handleTyping = event => {
+  const handleTyping = event => {
     let content = event.target.value;
     let item = event.target.name;
-    this.setState({
-      [item]: content
-    });
+    if (item === "username") {
+      setUsername(content);
+    } else if (item === "password") {
+      setPassword(content);
+    }
   };
-  render() {
-    return (
-      <div className="NavBar">
-        <input
-          name="username"
-          placeholder="UserName"
-          onChange={this.handleTyping}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={this.handleTyping}
-        />
-        <button
-          type="submit"
-          className="navitem1"
-          onClick={this.handleUserSignUp}
-        >
-          Sign Up
-        </button>
-      </div>
-    );
-  }
-}
 
-export default NavBar;
+  return (
+    <div className="NavBar">
+      <input name="username" placeholder="UserName" onChange={handleTyping} />
+      <input
+        name="password"
+        type="password"
+        placeholder="Password"
+        onChange={handleTyping}
+      />
+      <button type="submit" className="navitem1" onClick={handleUserSignUp}>
+        Sign Up
+      </button>
+    </div>
+  );
+}
