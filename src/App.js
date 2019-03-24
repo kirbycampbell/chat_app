@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import awsmobile from "./aws-exports";
-import { withAuthenticator } from "aws-amplify-react"; // or 'aws-amplify-react-native';
+//import { withAuthenticator } from "aws-amplify-react"; // or 'aws-amplify-react-native';
 import * as queries from "./graphql/queries";
 import * as mutations from "./graphql/mutations";
 import * as subscriptions from "./graphql/subscriptions";
@@ -180,4 +180,4 @@ class App extends Component {
     );
   }
 }
-export default withAuthenticator(App, false);
+export default App;
