@@ -6,6 +6,7 @@ import awsmobile from "./aws-exports";
 import * as queries from "./graphql/queries";
 import * as mutations from "./graphql/mutations";
 import * as subscriptions from "./graphql/subscriptions";
+import NavBar from "./NavBar";
 
 Amplify.configure(awsmobile);
 
@@ -13,10 +14,7 @@ class App extends Component {
   state = {
     message: "",
     conversation: [],
-    users: [],
-    username: "",
-    password: "",
-    iAm: ""
+    users: []
   };
 
   subscription = API.graphql(
@@ -92,55 +90,12 @@ class App extends Component {
     this.scrollToBottom();
   }
 
-  handleUserSignUp = async () => {
-    const userDeets = {
-      name: this.state.username,
-      password: this.state.password,
-      createdAt: ""
-    };
-    await API.graphql(
-      graphqlOperation(mutations.createUser, { input: userDeets })
-    );
-    this.setState({
-      username: "",
-      password: "",
-      iAm: userDeets.name
-    });
-  };
-
-  handleTyping = event => {
-    let content = event.target.value;
-    let item = event.target.name;
-    this.setState({
-      [item]: content
-    });
-  };
-
   setConvo = () => {};
 
   render() {
     return (
       <div className="App">
-        <div className="NavBar">
-          <input
-            name="username"
-            placeholder="UserName"
-            onChange={this.handleTyping}
-          />
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={this.handleTyping}
-          />
-          <button
-            type="submit"
-            className="navitem1"
-            onClick={this.handleUserSignUp}
-          >
-            Sign Up
-          </button>
-        </div>
+        <NavBar />
         <div className="Chat-Box">
           {this.state.conversation.map(convo => {
             return (
