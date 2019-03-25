@@ -9,7 +9,6 @@ import * as subscriptions from "./graphql/subscriptions";
 import NavBar from "./NavBar";
 import { FriendBox } from "./FriendBox";
 import { TypeBox } from "./TypeBox";
-import { SendBar } from "./SendBar";
 import { ChatBox } from "./ChatBox";
 
 Amplify.configure(awsmobile);
@@ -63,23 +62,23 @@ class App extends Component {
     });
   };
 
-  typing = event => {
-    this.setState({
-      message: event.target.value
-    });
-  };
+  // typing = event => {
+  //   this.setState({
+  //     message: event.target.value
+  //   });
+  // };
 
-  mutate = async () => {
-    const postDeets = {
-      title: "Msg1",
-      body: this.state.message,
-      createdAt: ""
-    };
-    await API.graphql(
-      graphqlOperation(mutations.createPost, { input: postDeets })
-    );
-    this.setState({ message: "" });
-  };
+  // mutate = async () => {
+  //   const postDeets = {
+  //     title: "Msg1",
+  //     body: this.state.message,
+  //     createdAt: ""
+  //   };
+  //   await API.graphql(
+  //     graphqlOperation(mutations.createPost, { input: postDeets })
+  //   );
+  //   this.setState({ message: "" });
+  // };
 
   componentDidMount() {
     this.query();
