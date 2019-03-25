@@ -1,7 +1,6 @@
 import React from "react";
 
 import "../Css/NavBar.css";
-import { userInfo } from "os";
 
 const NavBar = props => {
   return (

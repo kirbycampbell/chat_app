@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
-import Amplify from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import * as queries from "./graphql/queries";
+//import * as subscriptions from "../graphql/subscriptions";
 import awsmobile from "./aws-exports";
 import NavBar from "./Components/NavBar";
 import { FriendBox } from "./Components/FriendBox";
@@ -26,12 +28,34 @@ const App = () => {
     setSignUp(!signUp);
   };
 
+  // AUTHORIZING USER BELOW
   const authUser = user => {
     console.log(user);
+    // Query DB for USER
+    // const queryUsers = async () => {
+    //   const findUser = await API.graphql(
+    //     graphqlOperation(queries.listUsers, {
+    //       filter: { name: { eq: user.name } }
+    //     })
+    //   );
+    //   console.log(findUser.data.listUsers.items);
+    // };
+    //queryUsers();
     setAuth(true);
     setSignUp(false);
     setUser(user);
   };
+
+  const searchUser = async () => {
+    console.log("search user called");
+    const findUser = await API.graphql(
+      graphqlOperation(queries.listUsers, {
+        filter: { name: { contains: "StinkyButt" } }
+      })
+    );
+    console.log(findUser);
+  };
+
   // This is where the entire app comes together....
   return (
     <div className="App">
@@ -41,6 +65,7 @@ const App = () => {
         auth={auth}
         user={user}
       />
+      <button onClick={searchUser}>Search user</button>
       <SignUp
         authUser={authUser}
         render={signUp}
