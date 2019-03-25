@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
+import "../Css/SignUp.css";
 
 export const SignUp = props => {
   const [username, setUsername] = useState("");
@@ -45,6 +46,13 @@ export const SignUp = props => {
           placeholder="Password"
           onChange={handleTyping}
         />
+        <button
+          type="submit"
+          className="sign-up-btn"
+          onClick={props.handleUserSignUp}
+        >
+          Cancel
+        </button>
         <button
           type="submit"
           className="sign-up-btn"

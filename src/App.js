@@ -31,10 +31,14 @@ const App = () => {
   // This is where the entire app comes together....
   return (
     <div className="App">
-      <NavBar handleUserSignUp={handleUserSignUp} />
-      <SignUp authUser={authUser} render={signUp} />
-      <ChatBox />
-      <FriendBox setConvo={setConvo} />
+      <NavBar handleUserSignUp={handleUserSignUp} render={signUp} />
+      <SignUp
+        authUser={authUser}
+        render={signUp}
+        handleUserSignUp={handleUserSignUp}
+      />
+      <ChatBox render={signUp} />
+      <FriendBox setConvo={setConvo} render={signUp} />
       <TypeBox />
     </div>
   );
