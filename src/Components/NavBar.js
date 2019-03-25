@@ -5,7 +5,7 @@ import "../Css/NavBar.css";
 const NavBar = props => {
   return (
     <div className="NavBar">
-      <div>Chat App</div>
+      <div className="logo">Chatterson - The App</div>
       <button
         type="button"
         className="navitem1"
