@@ -9,6 +9,8 @@ import * as subscriptions from "./graphql/subscriptions";
 import NavBar from "./NavBar";
 import { FriendBox } from "./FriendBox";
 import { TypeBox } from "./TypeBox";
+import { SendBar } from "./SendBar";
+import { ChatBox } from "./ChatBox";
 
 Amplify.configure(awsmobile);
 
@@ -79,17 +81,8 @@ class App extends Component {
     this.setState({ message: "" });
   };
 
-  scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-  };
-
   componentDidMount() {
     this.query();
-    this.scrollToBottom();
-  }
-
-  componentDidUpdate() {
-    this.scrollToBottom();
   }
 
   setConvo = () => {};
@@ -98,29 +91,12 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        <div className="Chat-Box">
-          {this.state.conversation.map(convo => {
-            return (
-              <p className="text-boxes" key={convo.id}>
-                {convo.body}
-              </p>
-            );
-          })}
-          <div
-            style={{ float: "left", clear: "both" }}
-            ref={el => {
-              this.messagesEnd = el;
-            }}
-          />
-        </div>
+
+        <ChatBox conversation={this.state.conversation} />
 
         <FriendBox users={this.state.users} setConvo={this.setConvo} />
         <TypeBox message={this.state.message} typing={this.typing} />
-        <div className="sendBar">
-          <button className="send-btn" onClick={this.mutate}>
-            Send
-          </button>
-        </div>
+        <SendBar mutate={this.mutate} />
       </div>
     );
   }
