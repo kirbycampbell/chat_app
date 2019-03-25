@@ -30,15 +30,6 @@ class App extends Component {
       }))
   });
 
-  subscription = API.graphql(
-    graphqlOperation(subscriptions.onCreateUser)
-  ).subscribe({
-    next: newUser =>
-      this.setState(prevState => ({
-        users: [...prevState.users, newUser.value.data.onCreateUser]
-      }))
-  });
-
   query = async () => {
     let allPosts = await API.graphql(
       graphqlOperation(queries.listPosts, { limit: 100 })
@@ -50,12 +41,6 @@ class App extends Component {
     this.setState({
       conversation: sortedThread
     });
-    // let allUsers = await API.graphql(
-    //   graphqlOperation(queries.listUsers, { limit: 10 })
-    // );
-    // this.setState({
-    //   users: allUsers.data.listUsers.items
-    // });
   };
 
   componentDidMount() {
