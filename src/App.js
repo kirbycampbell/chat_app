@@ -95,8 +95,11 @@ class App extends Component {
         <ChatBox conversation={this.state.conversation} />
 
         <FriendBox users={this.state.users} setConvo={this.setConvo} />
-        <TypeBox message={this.state.message} typing={this.typing} />
-        <SendBar mutate={this.mutate} />
+        <TypeBox
+          message={this.state.message}
+          typing={this.typing}
+          mutate={this.mutate}
+        />
       </div>
     );
   }
