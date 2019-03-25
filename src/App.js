@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
+import Amplify from "aws-amplify";
 import awsmobile from "./aws-exports";
-import * as queries from "./graphql/queries";
-import * as subscriptions from "./graphql/subscriptions";
 import NavBar from "./NavBar";
 import { FriendBox } from "./FriendBox";
 import { TypeBox } from "./Components/TypeBox";
@@ -14,6 +12,8 @@ Amplify.configure(awsmobile);
 class App extends Component {
   state = {};
 
+  // Set Convo will be for connecting the logged in user-
+  // to the chat window of the user id chosen.
   setConvo = id => {
     console.log(id);
   };

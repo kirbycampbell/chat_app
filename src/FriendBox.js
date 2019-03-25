@@ -6,11 +6,13 @@ import * as subscriptions from "./graphql/subscriptions";
 export const FriendBox = props => {
   const [users, setUsers] = useState([]);
 
+  // On Render queries for users, and subscribes to User Creation.
   useEffect(() => {
     queryUsers();
     subscriptionUser();
   }, []);
 
+  // Queries DB for users.
   const queryUsers = async () => {
     const allUsers = await API.graphql(
       graphqlOperation(queries.listUsers, { limit: 10 })
@@ -18,6 +20,7 @@ export const FriendBox = props => {
     setUsers(allUsers.data.listUsers.items);
   };
 
+  // Subscribes to New User Creation & Adds to user array...
   const subscriptionUser = () => {
     API.graphql(graphqlOperation(subscriptions.onCreateUser)).subscribe({
       next: newUserData => {
