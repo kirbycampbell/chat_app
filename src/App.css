@@ -63,6 +63,10 @@
   height: 4em;
 }
 
+.usr-btn {
+  cursor: pointer;
+}
+
 .send-btn {
   height: 100%;
   width: 20%;

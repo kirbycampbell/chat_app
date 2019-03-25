@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { SendBar } from "./Components/SendBar";
-import "./App.css";
+import { SendBar } from "./SendBar";
 import { API, graphqlOperation } from "aws-amplify";
-import * as mutations from "./graphql/mutations";
+import * as mutations from "../graphql/mutations";
 
 export const TypeBox = props => {
   const [message, setMessage] = useState("");
