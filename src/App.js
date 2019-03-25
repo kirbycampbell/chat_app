@@ -11,6 +11,9 @@ import { ChatBox } from "./Components/ChatBox";
 import { SignUp } from "./Components/SignUp";
 
 Amplify.configure(awsmobile);
+var bcrypt = require("bcryptjs");
+//var salt = bcrypt.genSaltSync(10);
+//var hash = bcrypt.hashSync("B4c0//", salt);
 
 // OuterMost Layer for the App Management
 const App = () => {
@@ -54,6 +57,25 @@ const App = () => {
     searchUser();
   };
 
+  const makePWD = () => {
+    bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash("poopy", salt, function(err, hash) {
+        console.log(hash);
+      });
+    });
+  };
+  const hashedmr =
+    "$2a$10$T11M0zKZJhUuUIdxiTJ5S.o5n0.4/nZVHxpEvVBGctQMwUgl69iYG";
+  const checkPWD = myPW => {
+    bcrypt.compare(myPW, hashedmr).then(isMatch => {
+      if (isMatch) {
+        console.log("isMatched");
+      } else {
+        console.log("NOT MATCHED");
+      }
+    });
+  };
+
   // This is where the entire app comes together....
   return (
     <div className="App">
@@ -63,7 +85,8 @@ const App = () => {
         auth={auth}
         user={user}
       />
-
+      <button onClick={makePWD}>Make Password</button>
+      <button onClick={() => checkPWD("poopy")}>Check Password</button>
       <SignUp
         authUser={authUser}
         render={signUp}
