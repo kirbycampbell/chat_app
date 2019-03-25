@@ -7,6 +7,8 @@ import * as queries from "./graphql/queries";
 import * as mutations from "./graphql/mutations";
 import * as subscriptions from "./graphql/subscriptions";
 import NavBar from "./NavBar";
+import { FriendBox } from "./FriendBox";
+import { TypeBox } from "./TypeBox";
 
 Amplify.configure(awsmobile);
 
@@ -111,21 +113,9 @@ class App extends Component {
             }}
           />
         </div>
-        <div className="Friend-Box">
-          {this.state.users.map(user => (
-            <div onClick={this.setConvo} className="friend" key={user.id}>
-              {user.name}
-            </div>
-          ))}
-        </div>
-        <div className="Type-Box">
-          <textarea
-            className="txtarea"
-            placeholder="type here"
-            value={this.state.message}
-            onChange={this.typing}
-          />
-        </div>
+
+        <FriendBox users={this.state.users} setConvo={this.setConvo} />
+        <TypeBox message={this.state.message} typing={this.typing} />
         <div className="sendBar">
           <button className="send-btn" onClick={this.mutate}>
             Send
