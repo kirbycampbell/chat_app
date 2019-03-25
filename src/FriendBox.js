@@ -8,22 +8,22 @@ export const FriendBox = props => {
 
   useEffect(() => {
     queryUsers();
-    subscription();
+    subscriptionUser();
   }, []);
 
   const queryUsers = async () => {
-    let allUsers = await API.graphql(
-      graphqlOperation(queries.listUsers, { limit: 20 })
+    const allUsers = await API.graphql(
+      graphqlOperation(queries.listUsers, { limit: 10 })
     );
     setUsers(allUsers.data.listUsers.items);
   };
 
-  const subscription = () => {
+  const subscriptionUser = () => {
     API.graphql(graphqlOperation(subscriptions.onCreateUser)).subscribe({
-      next: newUser => {
-        const newUsery = newUser.value.data.onCreateUser;
+      next: newUserData => {
+        const newUser = newUserData.value.data.onCreateUser;
         setUsers(prevUsers => {
-          const updatedUsers = [...prevUsers, newUsery];
+          const updatedUsers = [...prevUsers, newUser];
           return updatedUsers;
         });
       }

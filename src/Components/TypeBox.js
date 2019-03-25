@@ -3,7 +3,7 @@ import { SendBar } from "./SendBar";
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
 
-export const TypeBox = props => {
+export const TypeBox = () => {
   const [message, setMessage] = useState("");
 
   const typing = event => {
