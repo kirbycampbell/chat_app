@@ -39,9 +39,17 @@ const App = () => {
         })
       );
       const signedInUser = findUser.data.listUsers.items[0];
-      setUser(signedInUser);
-      setAuth(true);
-      setSignUp(false);
+      if (
+        signedInUser.name === user.name &&
+        signedInUser.password === user.password
+      ) {
+        setUser(signedInUser);
+        setAuth(true);
+        setSignUp(false);
+        console.log("Signup Successful");
+      } else {
+        console.log("Sign Up Failed");
+      }
     };
     searchUser();
   };
