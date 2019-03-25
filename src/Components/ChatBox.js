@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import * as queries from "./graphql/queries";
-import * as subscriptions from "./graphql/subscriptions";
+import * as queries from "../graphql/queries";
+import * as subscriptions from "../graphql/subscriptions";
+import "../Css/ChatBox.css";
 
 export const ChatBox = props => {
   const [conversation, setConversation] = useState([]);

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import * as queries from "./graphql/queries";
+import * as queries from "../graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
-import * as subscriptions from "./graphql/subscriptions";
+import * as subscriptions from "../graphql/subscriptions";
+import "../Css/FriendBox.css";
 
 export const FriendBox = props => {
   const [users, setUsers] = useState([]);

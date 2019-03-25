@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SendBar } from "./SendBar";
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
+import "../Css/TypeBox.css";
 
 export const TypeBox = () => {
   const [message, setMessage] = useState("");

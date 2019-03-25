@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import * as mutations from "./graphql/mutations";
+import * as mutations from "../graphql/mutations";
 
-export default function NavBar() {
+export const SignUp = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [iAm, setIAm] = useState("");
 
   // handleUserSignUp grabs state and mutates DB with createUser
   const handleUserSignUp = async () => {
@@ -18,12 +17,12 @@ export default function NavBar() {
     await API.graphql(
       graphqlOperation(mutations.createUser, { input: newUser })
     );
-
     // Resets Forms
     setUsername("");
     setPassword("");
     // Sets User as logged in : MOVE THIS ::: TODO ::::
-    setIAm(newUser.name);
+    //setIAm(newUser.name);
+    props.authUser(newUser);
   };
 
   // Function handles userName & Password forms & assigns to state
@@ -36,19 +35,24 @@ export default function NavBar() {
       setPassword(content);
     }
   };
-
-  return (
-    <div className="NavBar">
-      <input name="username" placeholder="UserName" onChange={handleTyping} />
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        onChange={handleTyping}
-      />
-      <button type="submit" className="navitem1" onClick={handleUserSignUp}>
-        Sign Up
-      </button>
-    </div>
-  );
-}
+  if (props.render) {
+    return (
+      <div className="sign-up-form">
+        <input name="username" placeholder="UserName" onChange={handleTyping} />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={handleTyping}
+        />
+        <button
+          type="submit"
+          className="sign-up-btn"
+          onClick={handleUserSignUp}
+        >
+          Sign Up
+        </button>
+      </div>
+    );
+  } else return null;
+};

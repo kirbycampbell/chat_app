@@ -1,4 +1,5 @@
 import React from "react";
+import "../Css/SendBar.css";
 
 export const SendBar = props => {
   return (
