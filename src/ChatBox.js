@@ -40,11 +40,19 @@ export const ChatBox = props => {
     });
   };
 
+  const editMsg = id => {
+    console.log(id);
+  };
+
   return (
     <div className="Chat-Box">
       {conversation.map(convo => {
         return (
-          <p className="text-boxes" key={convo.id}>
+          <p
+            onClick={() => editMsg(convo.id)}
+            className="text-boxes"
+            key={convo.id}
+          >
             {convo.body}
           </p>
         );

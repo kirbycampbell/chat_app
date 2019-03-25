@@ -9,24 +9,23 @@ import { ChatBox } from "./ChatBox";
 
 Amplify.configure(awsmobile);
 
-class App extends Component {
-  state = {};
-
+// OuterMost Layer for the App Management
+const App = () => {
+  // TODO:::::::::::::::::::::::::::::
   // Set Convo will be for connecting the logged in user-
   // to the chat window of the user id chosen.
-  setConvo = id => {
+  const setConvo = id => {
     console.log(id);
   };
 
-  render() {
-    return (
-      <div className="App">
-        <NavBar />
-        <ChatBox />
-        <FriendBox setConvo={this.setConvo} />
-        <TypeBox />
-      </div>
-    );
-  }
-}
+  // This is where the entire app comes together....
+  return (
+    <div className="App">
+      <NavBar />
+      <ChatBox />
+      <FriendBox setConvo={setConvo} />
+      <TypeBox />
+    </div>
+  );
+};
 export default App;

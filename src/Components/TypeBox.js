@@ -6,10 +6,12 @@ import * as mutations from "../graphql/mutations";
 export const TypeBox = () => {
   const [message, setMessage] = useState("");
 
+  // When Typing- sets message state to that which is typed...
   const typing = event => {
     setMessage(event.target.value);
   };
 
+  // Send assigns Msg state and sends it to DB....
   const send = async () => {
     const postDeets = {
       title: "Msg1",
@@ -19,6 +21,7 @@ export const TypeBox = () => {
     await API.graphql(
       graphqlOperation(mutations.createPost, { input: postDeets })
     );
+    // Resets Message form to empty...
     setMessage("");
   };
 
@@ -32,7 +35,6 @@ export const TypeBox = () => {
           onChange={typing}
         />
       </div>
-
       <SendBar send={send} />
     </div>
   );

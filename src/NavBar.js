@@ -7,20 +7,26 @@ export default function NavBar() {
   const [password, setPassword] = useState("");
   const [iAm, setIAm] = useState("");
 
+  // handleUserSignUp grabs state and mutates DB with createUser
   const handleUserSignUp = async () => {
-    let userDeets = {
+    // Takes state and makes userDeets
+    let newUser = {
       name: username,
       password: password,
       createdAt: ""
     };
     await API.graphql(
-      graphqlOperation(mutations.createUser, { input: userDeets })
+      graphqlOperation(mutations.createUser, { input: newUser })
     );
+
+    // Resets Forms
     setUsername("");
     setPassword("");
-    setIAm(userDeets.name);
+    // Sets User as logged in : MOVE THIS ::: TODO ::::
+    setIAm(newUser.name);
   };
 
+  // Function handles userName & Password forms & assigns to state
   const handleTyping = event => {
     let content = event.target.value;
     let item = event.target.name;
