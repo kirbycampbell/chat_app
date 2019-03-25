@@ -47,17 +47,21 @@ export const ChatBox = props => {
 
   return (
     <div className="Chat-Box">
-      {conversation.map(convo => {
-        return (
-          <p
-            onClick={() => editMsg(convo.id)}
-            className="text-boxes"
-            key={convo.id}
-          >
-            {convo.body}
-          </p>
-        );
-      })}
+      {props.auth && (
+        <div>
+          {conversation.map(convo => {
+            return (
+              <p
+                onClick={() => editMsg(convo.id)}
+                className="text-boxes"
+                key={convo.id}
+              >
+                {convo.body}
+              </p>
+            );
+          })}
+        </div>
+      )}
       <div style={{ float: "left", clear: "both" }} />
     </div>
   );

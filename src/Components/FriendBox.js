@@ -36,16 +36,20 @@ export const FriendBox = props => {
 
   return (
     <div className="Friend-Box">
-      {users.map(user => (
-        <div
-          className="usr-btn friend"
-          onClick={() => props.setConvo(user.id)}
-          key={user.id}
-          value={user.id}
-        >
-          {user.name}
+      {props.auth && (
+        <div>
+          {users.map(user => (
+            <div
+              className="usr-btn friend"
+              onClick={() => props.setConvo(user.id)}
+              key={user.id}
+              value={user.id}
+            >
+              {user.name}
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };

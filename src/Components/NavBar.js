@@ -6,7 +6,7 @@ const NavBar = props => {
   return (
     <div className="NavBar">
       <div className="logo">Chatterson - The App</div>
-      {!props.render && (
+      {!props.render && !props.auth && (
         <button
           type="button"
           className="navitem1"

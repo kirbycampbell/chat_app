@@ -27,18 +27,20 @@ const App = () => {
 
   const authUser = user => {
     console.log(user);
+    setAuth(true);
+    setSignUp(false);
   };
   // This is where the entire app comes together....
   return (
     <div className="App">
-      <NavBar handleUserSignUp={handleUserSignUp} render={signUp} />
+      <NavBar handleUserSignUp={handleUserSignUp} render={signUp} auth={auth} />
       <SignUp
         authUser={authUser}
         render={signUp}
         handleUserSignUp={handleUserSignUp}
       />
-      <ChatBox render={signUp} />
-      <FriendBox setConvo={setConvo} render={signUp} />
+      <ChatBox auth={auth} />
+      <FriendBox setConvo={setConvo} auth={auth} />
       <TypeBox />
     </div>
   );
