@@ -30,30 +30,20 @@ const App = () => {
 
   // AUTHORIZING USER BELOW
   const authUser = user => {
-    console.log(user);
     // Query DB for USER
-    // const queryUsers = async () => {
-    //   const findUser = await API.graphql(
-    //     graphqlOperation(queries.listUsers, {
-    //       filter: { name: { eq: user.name } }
-    //     })
-    //   );
-    //   console.log(findUser.data.listUsers.items);
-    // };
-    //queryUsers();
-    setAuth(true);
-    setSignUp(false);
-    setUser(user);
-  };
-
-  const searchUser = async () => {
-    console.log("search user called");
-    const findUser = await API.graphql(
-      graphqlOperation(queries.listUsers, {
-        filter: { name: { contains: "StinkyButt" } }
-      })
-    );
-    console.log(findUser);
+    const searchUser = async () => {
+      const findUser = await API.graphql(
+        graphqlOperation(queries.listUsers, {
+          limit: 200,
+          filter: { name: { eq: user.name } }
+        })
+      );
+      const signedInUser = findUser.data.listUsers.items[0];
+      setUser(signedInUser);
+      setAuth(true);
+      setSignUp(false);
+    };
+    searchUser();
   };
 
   // This is where the entire app comes together....
@@ -65,7 +55,7 @@ const App = () => {
         auth={auth}
         user={user}
       />
-      <button onClick={searchUser}>Search user</button>
+
       <SignUp
         authUser={authUser}
         render={signUp}
