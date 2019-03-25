@@ -14,6 +14,7 @@ Amplify.configure(awsmobile);
 const App = () => {
   const [signUp, setSignUp] = useState(false);
   const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState([]);
   // TODO:::::::::::::::::::::::::::::
   // Set Convo will be for connecting the logged in user-
   // to the chat window of the user id chosen.
@@ -29,11 +30,17 @@ const App = () => {
     console.log(user);
     setAuth(true);
     setSignUp(false);
+    setUser(user);
   };
   // This is where the entire app comes together....
   return (
     <div className="App">
-      <NavBar handleUserSignUp={handleUserSignUp} render={signUp} auth={auth} />
+      <NavBar
+        handleUserSignUp={handleUserSignUp}
+        render={signUp}
+        auth={auth}
+        user={user}
+      />
       <SignUp
         authUser={authUser}
         render={signUp}

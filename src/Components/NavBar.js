@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../Css/NavBar.css";
+import { userInfo } from "os";
 
 const NavBar = props => {
   return (
@@ -15,6 +16,7 @@ const NavBar = props => {
           Sign Up
         </button>
       )}
+      {props.auth && <p className="welcome">{props.user.name}'s Chat Page</p>}
     </div>
   );
 };

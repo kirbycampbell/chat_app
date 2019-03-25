@@ -29,3 +29,12 @@
   color: white;
   font-family: "Laila", serif;
 }
+.welcome {
+  float: right;
+  text-align: center;
+  position: absolute;
+  color: white;
+  width: 100%;
+  margin: auto;
+  font-size: 30px;
+}
