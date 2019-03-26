@@ -57,15 +57,21 @@ const App = () => {
     searchUser();
   };
 
+  // Testing Password Salting & Hashing w Bcrypt
+
+  // Test Function for making password Hash
   const makePWD = () => {
     bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash("poopy", salt, function(err, hash) {
+      bcrypt.hash("passwordTest123", salt, function(err, hash) {
         console.log(hash);
       });
     });
   };
+  // Fake DB Save of hash created above
   const hashedmr =
     "$2a$10$T11M0zKZJhUuUIdxiTJ5S.o5n0.4/nZVHxpEvVBGctQMwUgl69iYG";
+
+  // Test Function for comparing password hashes - correct password is sent in on btn
   const checkPWD = myPW => {
     bcrypt.compare(myPW, hashedmr).then(isMatch => {
       if (isMatch) {
@@ -75,8 +81,6 @@ const App = () => {
       }
     });
   };
-
-  // This is where the entire app comes together....
   return (
     <div className="App">
       <NavBar
@@ -86,7 +90,9 @@ const App = () => {
         user={user}
       />
       <button onClick={makePWD}>Make Password</button>
-      <button onClick={() => checkPWD("poopy")}>Check Password</button>
+      <button onClick={() => checkPWD("passwordTest123")}>
+        Check Password
+      </button>
       <SignUp
         authUser={authUser}
         render={signUp}
