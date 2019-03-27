@@ -103,6 +103,16 @@ const App = () => {
     localStorage.setItem("userPw", dbUserInfo.password); // Set LocalStorage for Relogin
   };
 
+  const logout = () => {
+    setUser([]); // Sets UserInfo in state
+    setAuth(false); // App is authd -- render User's page
+    setSignUp(false); // Get rid of SignUp Form
+    setSignIn(true); // Get rid of SignUp Form
+    setLoginMsg("Sign Out Successful"); // Notify User of Successful Login
+    localStorage.setItem("userName", ""); // Set LocalStorage for Relogin
+    localStorage.setItem("userPw", ""); // Set LocalStorage for Relogin
+  };
+
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   //:::::::::: Render App Below ::::::::::::::::::::::::::::::::::::::::
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -117,6 +127,7 @@ const App = () => {
         loginMsg={loginMsg}
         auth={auth}
         user={user}
+        logout={logout}
       />
       <SignUp
         authUser={authUser}

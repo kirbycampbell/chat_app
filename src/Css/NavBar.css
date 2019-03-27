@@ -9,6 +9,23 @@
   float: right;
   margin: 1%;
 }
+.logout-btn {
+  background: rgba(16, 16, 68, 0.644);
+  color: white;
+  height: 100%;
+  cursor: pointer;
+  float: right;
+  margin-right: 2%;
+  width: 80px;
+  border: none;
+  z-index: 20;
+}
+
+.logout-btn:hover {
+  background: rgba(21, 21, 121, 0.644);
+  cursor: pointer;
+  z-index: 20;
+}
 .nav-btns {
   height: 100%;
 }
@@ -64,4 +81,5 @@
   width: 100%;
   margin: auto;
   font-size: 30px;
+  z-index: 0;
 }
