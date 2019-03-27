@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import * as queries from "./graphql/queries";
@@ -22,6 +22,14 @@ const App = () => {
   const [user, setUser] = useState([]);
   const [loginMsg, setLoginMsg] = useState("");
 
+  useEffect(() => {
+    if (localStorage.getItem("userName") && localStorage.getItem("userPw")) {
+      let user = { name: localStorage.getItem("userName") };
+      let pw = localStorage.getItem("userPw");
+      authUser(user, pw);
+    }
+  }, []);
+
   // TODO:::::::::::::::::::::::::::::
   // Set Convo will be for connecting the logged in user-
   // to the chat window of the user id chosen.
@@ -29,40 +37,64 @@ const App = () => {
     console.log(id);
   };
 
+  // Manages Login/SignUp Form Visibility
   const handleUserSignUp = () => {
     setSignUp(!signUp);
   };
-
   const handleUserSignIn = () => {
     setSignIn(!signIn);
   };
-  // AUTHORIZING USER BELOW
+
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  //::::::::: AUTH & SIGN IN :::::::::::::::::::::::::::::::::::::::::::::::
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   const authUser = (user, pwd) => {
-    // Query DB for USER
     const searchUser = async () => {
+      // AUTHORIZING USER BELOW
       const findUser = await API.graphql(
+        // Query/Filter DB for USER
         graphqlOperation(queries.listUsers, {
           limit: 200,
           filter: { name: { eq: user.name } }
         })
       );
-      const signedInUser = findUser.data.listUsers.items[0];
-      bcrypt.compare(pwd, signedInUser.password).then(isMatch => {
-        if (isMatch && signedInUser.name === user.name) {
-          setUser(signedInUser);
-          setAuth(true);
-          setSignUp(false);
-          setSignIn(false);
-          setLoginMsg("Sign In Successful");
-        } else if (!isMatch && signedInUser.name === user.name) {
-          setLoginMsg("Password INCORRECT!");
-        } else {
-          setLoginMsg("User/Password Incorrect");
-        }
-      });
+      const dbUserInfo = findUser.data.listUsers.items[0];
+      if (pwd === dbUserInfo.password) {
+        userSignIn(dbUserInfo);
+      } else {
+        bcrypt.compare(pwd, dbUserInfo.password).then(isMatch => {
+          // Bcrypt Compares user entered password with hashed Backend Password
+          console.log(pwd, dbUserInfo.password);
+          if (isMatch && dbUserInfo.name === user.name) {
+            // If pw & username match - call userSignIn
+            userSignIn(dbUserInfo);
+          } else if (!isMatch && dbUserInfo.name === user.name) {
+            // If password incorrect, notify user!
+            setLoginMsg("Password INCORRECT!");
+          } else {
+            // If Everything is incorrect, notify user!
+            setLoginMsg("User/Password Incorrect");
+          }
+        });
+      }
     };
-    searchUser();
+    searchUser(); // Calls the above method ^^^
   };
+
+  const userSignIn = dbUserInfo => {
+    // SignIn Sequence
+    setUser(dbUserInfo); // Sets UserInfo in state
+    setAuth(true); // App is authd -- render User's page
+    setSignUp(false); // Get rid of SignUp Form
+    setSignIn(false); // Get rid of SignUp Form
+    setLoginMsg("Sign In Successful"); // Notify User of Successful Login
+    localStorage.setItem("userName", dbUserInfo.name); // Set LocalStorage for Relogin
+    localStorage.setItem("userPw", dbUserInfo.password); // Set LocalStorage for Relogin
+  };
+
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  //:::::::::: Render App Below ::::::::::::::::::::::::::::::::::::::::
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
   return (
     <div className="App">

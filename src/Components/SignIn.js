@@ -14,7 +14,6 @@ export const SignIn = props => {
     };
     // Sets User as logged in - this method is in App.js
     props.authUser(newUser, password);
-    console.log(newUser, password);
     // Resets Forms
     setUsername("");
     setPassword("");
