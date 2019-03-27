@@ -4,17 +4,14 @@ import * as queries from "../graphql/queries";
 import * as subscriptions from "../graphql/subscriptions";
 import "../Css/ChatBox.css";
 
-export const ChatBox = props => {
+export const ChatBox1 = props => {
   const [conversation, setConversation] = useState([]);
 
   // useEffect Queries for Messages, and subscribes to new Msgs.
   useEffect(() => {
-    if (props.selectedConvo) {
-      queryMsgs();
-      subscriptionMsgs();
-      console.log(props.selectedConvo);
-    }
-  }, [props.selectedConvo]);
+    queryMsgs();
+    subscriptionMsgs();
+  }, []);
 
   // queryMsgs queries the DB for all Msgs
   const queryMsgs = async () => {

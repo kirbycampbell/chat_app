@@ -23,6 +23,7 @@ const App = () => {
   const [user, setUser] = useState([]);
   const [loginMsg, setLoginMsg] = useState("");
   const [loginMsgTimer, setLoginMsgTimer] = useState(0);
+  const [selectedConvo, setSelectedConvo] = useState(null);
 
   useEffect(() => {
     if (localStorage.getItem("userName") && localStorage.getItem("userPw")) {
@@ -37,7 +38,6 @@ const App = () => {
       setLoginMsg(false);
     } else if (loginMsg && loginMsgTimer < 2) {
       setLoginMsgTimer(loginMsgTimer + 1);
-      console.log(loginMsgTimer);
     }
   }, 1000);
 
@@ -45,7 +45,7 @@ const App = () => {
   // Set Convo will be for connecting the logged in user-
   // to the chat window of the user id chosen.
   const setConvo = id => {
-    console.log(id);
+    setSelectedConvo(id);
   };
 
   // Manages Login/SignUp Form Visibility
@@ -75,7 +75,6 @@ const App = () => {
       } else {
         bcrypt.compare(pwd, dbUserInfo.password).then(isMatch => {
           // Bcrypt Compares user entered password with hashed Backend Password
-          console.log(pwd, dbUserInfo.password);
           if (isMatch && dbUserInfo.name === user.name) {
             // If pw & username match - call userSignIn
             userSignIn(dbUserInfo);
@@ -101,6 +100,7 @@ const App = () => {
     setLoginMsg("Sign In Successful"); // Notify User of Successful Login
     localStorage.setItem("userName", dbUserInfo.name); // Set LocalStorage for Relogin
     localStorage.setItem("userPw", dbUserInfo.password); // Set LocalStorage for Relogin
+    console.log(dbUserInfo);
   };
 
   const logout = () => {
@@ -139,7 +139,7 @@ const App = () => {
         render={signIn}
         handleUserSignIn={handleUserSignIn}
       />
-      <ChatBox auth={auth} />
+      <ChatBox auth={auth} user={user} selectedConvo={selectedConvo} />
       <FriendBox setConvo={setConvo} auth={auth} />
       <TypeBox />
     </div>
