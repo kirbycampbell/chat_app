@@ -2,49 +2,44 @@ import React, { useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
 import "../Css/SignUp.css";
-//import useInterval from "./../useInterval";
+import useInterval from "./../useInterval";
 var bcrypt = require("bcryptjs");
 
 export const SignUp = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState(null);
   const [hashPass, setHashPass] = useState("");
+  const [hashTimer, setHashTimer] = useState(false);
+  const [count, setCount] = useState(0);
 
-  const [hashDone, setHashDone] = useState(false);
-  const [userDetails, setUserDetails] = useState({});
-
-  // useInterval(() => {
-  //   if (hashTimer) {
-  //     setHashDone(true);
-  //     addNewUser();
-  //     setHashTimer(false);
-  //   }
-  // }, 1000);
+  useInterval(() => {
+    if (hashTimer && count >= 0.5) {
+      setHashTimer(false);
+      addNewUser();
+    } else if (hashTimer && count < 0.5) {
+      setCount(count + 1);
+      console.log(count);
+    }
+  }, 1000);
 
   // handleUserSignUp grabs state and mutates DB with createUser
-
-  //ISNT DELAYING ENOUGH!!! FIND A SET TIMEOUT FUNCTION
   const handleUserSignUp = () => {
+    setHashTimer(true);
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(password, salt, function(err, hash) {
-        if (hash) {
-          setHashPass(hash);
-          console.log("Make Password Hash:");
-          console.log(hash);
-          setHashDone(true);
-          let newUser = {
-            name: username,
-            password: hashPass,
-            createdAt: ""
-          };
-          setUserDetails(newUser);
-          addNewUser(newUser);
-        }
+        setHashPass(hash);
+        console.log("Make Password Hash:");
+        console.log(hash);
       });
     });
   };
 
-  const addNewUser = async newUser => {
+  const addNewUser = async () => {
+    let newUser = {
+      name: username,
+      password: hashPass,
+      createdAt: ""
+    };
     // Takes state and makes userDeets
     console.log("Add new User Called");
     console.log(newUser);
