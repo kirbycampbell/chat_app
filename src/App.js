@@ -20,6 +20,7 @@ const App = () => {
   const [signIn, setSignIn] = useState(false);
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState([]);
+  const [loginMsg, setLoginMsg] = useState("");
 
   // TODO:::::::::::::::::::::::::::::
   // Set Convo will be for connecting the logged in user-
@@ -48,15 +49,15 @@ const App = () => {
       const signedInUser = findUser.data.listUsers.items[0];
       bcrypt.compare(pwd, signedInUser.password).then(isMatch => {
         if (isMatch && signedInUser.name === user.name) {
-          console.log("AUTHORIZED");
           setUser(signedInUser);
           setAuth(true);
           setSignUp(false);
-          console.log("Signup Successful");
+          setSignIn(false);
+          setLoginMsg("Sign In Successful");
         } else if (!isMatch && signedInUser.name === user.name) {
-          console.log("Password INCORRECT!");
+          setLoginMsg("Password INCORRECT!");
         } else {
-          console.log("NOT MATCHED");
+          setLoginMsg("User/Password Incorrect");
         }
       });
     };
@@ -70,6 +71,7 @@ const App = () => {
         handleUserSignIn={handleUserSignIn}
         render={signUp}
         renderIn={signIn}
+        loginMsg={loginMsg}
         auth={auth}
         user={user}
       />
