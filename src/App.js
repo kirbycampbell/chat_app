@@ -10,6 +10,7 @@ import { TypeBox } from "./Components/TypeBox";
 import { ChatBox } from "./Components/ChatBox";
 import { SignUp } from "./Components/SignUp";
 import { SignIn } from "./Components/SignIn";
+import useInterval from "./useInterval";
 
 Amplify.configure(awsmobile);
 var bcrypt = require("bcryptjs");
@@ -21,6 +22,7 @@ const App = () => {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState([]);
   const [loginMsg, setLoginMsg] = useState("");
+  const [loginMsgTimer, setLoginMsgTimer] = useState(0);
 
   useEffect(() => {
     if (localStorage.getItem("userName") && localStorage.getItem("userPw")) {
@@ -29,6 +31,15 @@ const App = () => {
       authUser(user, pw);
     }
   }, []);
+
+  useInterval(() => {
+    if (loginMsg && loginMsgTimer >= 2) {
+      setLoginMsg(false);
+    } else if (loginMsg && loginMsgTimer < 2) {
+      setLoginMsgTimer(loginMsgTimer + 1);
+      console.log(loginMsgTimer);
+    }
+  }, 1000);
 
   // TODO:::::::::::::::::::::::::::::
   // Set Convo will be for connecting the logged in user-
