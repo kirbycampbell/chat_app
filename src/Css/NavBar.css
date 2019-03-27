@@ -4,6 +4,9 @@
   background: rgba(30, 39, 48, 0.795);
   overflow: hidden;
 }
+.nav-btns {
+  height: 100%;
+}
 .navitem1 {
   float: right;
   background: rgb(27, 15, 19);
@@ -20,6 +23,25 @@
 }
 
 .navitem1::active {
+  background: rgb(82, 47, 58);
+  cursor: pointer;
+}
+.navitem2 {
+  float: right;
+  background: rgb(27, 15, 19);
+  border: rgba(255, 255, 255, 0);
+  color: white;
+  height: 100%;
+  width: 90px;
+  margin-right: 4%;
+}
+
+.navitem2:hover {
+  background: rgb(54, 23, 33);
+  cursor: pointer;
+}
+
+.navitem2::active {
   background: rgb(82, 47, 58);
   cursor: pointer;
 }

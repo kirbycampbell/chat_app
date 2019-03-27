@@ -9,6 +9,7 @@ import { FriendBox } from "./Components/FriendBox";
 import { TypeBox } from "./Components/TypeBox";
 import { ChatBox } from "./Components/ChatBox";
 import { SignUp } from "./Components/SignUp";
+import { SignIn } from "./Components/SignIn";
 
 Amplify.configure(awsmobile);
 var bcrypt = require("bcryptjs");
@@ -16,8 +17,10 @@ var bcrypt = require("bcryptjs");
 // OuterMost Layer for the App Management
 const App = () => {
   const [signUp, setSignUp] = useState(false);
+  const [signIn, setSignIn] = useState(false);
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState([]);
+
   // TODO:::::::::::::::::::::::::::::
   // Set Convo will be for connecting the logged in user-
   // to the chat window of the user id chosen.
@@ -29,6 +32,9 @@ const App = () => {
     setSignUp(!signUp);
   };
 
+  const handleUserSignIn = () => {
+    setSignIn(!signIn);
+  };
   // AUTHORIZING USER BELOW
   const authUser = (user, pwd) => {
     // Query DB for USER
@@ -57,46 +63,25 @@ const App = () => {
     searchUser();
   };
 
-  // Testing Password Salting & Hashing w Bcrypt
-
-  // Test Function for making password Hash
-  const makePWD = () => {
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash("passwordTest123", salt, function(err, hash) {
-        console.log(hash);
-      });
-    });
-  };
-  // Fake DB Save of hash created above
-  const hashedmr =
-    "$2a$10$p2NdC11iQ1gdY/HY3QP8SOWpRIqlZGARvdZdukH6D3QfaEvnJtsKG";
-
-  // Test Function for comparing password hashes - correct password is sent in on btn
-  const checkPWD = myPW => {
-    bcrypt.compare(myPW, hashedmr).then(isMatch => {
-      if (isMatch) {
-        console.log("isMatched");
-      } else {
-        console.log("NOT MATCHED");
-      }
-    });
-  };
   return (
     <div className="App">
       <NavBar
         handleUserSignUp={handleUserSignUp}
+        handleUserSignIn={handleUserSignIn}
         render={signUp}
+        renderIn={signIn}
         auth={auth}
         user={user}
       />
-      <button onClick={makePWD}>Make Password</button>
-      <button onClick={() => checkPWD("passwordTest123")}>
-        Check Password
-      </button>
       <SignUp
         authUser={authUser}
         render={signUp}
         handleUserSignUp={handleUserSignUp}
+      />
+      <SignIn
+        authUser={authUser}
+        render={signIn}
+        handleUserSignIn={handleUserSignIn}
       />
       <ChatBox auth={auth} />
       <FriendBox setConvo={setConvo} auth={auth} />

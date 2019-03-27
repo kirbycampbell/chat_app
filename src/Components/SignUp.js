@@ -12,6 +12,7 @@ export const SignUp = props => {
   const [hashTimer, setHashTimer] = useState(false);
   const [count, setCount] = useState(0);
 
+  // Adds 0.5s before adding hashed password to db - Hook for setInterval
   useInterval(() => {
     if (hashTimer && count >= 0.5) {
       setHashTimer(false);
@@ -34,20 +35,19 @@ export const SignUp = props => {
     });
   };
 
+  // This is called after the timer runs for 0.5s and mutates the DB
   const addNewUser = async () => {
+    // Assigns newUser to object for mutating
     let newUser = {
       name: username,
       password: hashPass,
       createdAt: ""
     };
-    // Takes state and makes userDeets
-    console.log("Add new User Called");
-    console.log(newUser);
+    // Takes newUser and mutates DB
     await API.graphql(
       graphqlOperation(mutations.createUser, { input: newUser })
     );
-
-    // Sets User as logged in
+    // Sets User as logged in - this method is in App.js
     props.authUser(newUser, password);
     // Resets Forms
     setUsername("");
@@ -64,6 +64,7 @@ export const SignUp = props => {
       setPassword(content);
     }
   };
+
   if (props.render) {
     return (
       <div className="sign-up-form">
