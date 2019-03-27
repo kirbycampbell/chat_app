@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import * as queries from "../graphql/queries";
+import * as mutations from "../graphql/mutations";
 import * as subscriptions from "../graphql/subscriptions";
 import "../Css/ChatBox.css";
 
@@ -10,11 +11,21 @@ export const ChatBox = props => {
   // useEffect Queries for Messages, and subscribes to new Msgs.
   useEffect(() => {
     if (props.selectedConvo) {
-      queryMsgs();
-      subscriptionMsgs();
-      console.log(props.selectedConvo);
+      //queryMsgs();
+      //subscriptionMsgs();
+      createConvo();
     }
   }, [props.selectedConvo]);
+
+  const createConvo = async () => {
+    let newConvo = {
+      contents: [{ body: "Start your Convo Here:", createdAt: "" }]
+    };
+    let result = await API.graphql(
+      graphqlOperation(mutations.createConversation, { input: newConvo })
+    );
+    console.log(result);
+  };
 
   // queryMsgs queries the DB for all Msgs
   const queryMsgs = async () => {

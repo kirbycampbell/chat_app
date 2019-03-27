@@ -4,8 +4,22 @@
 export const onCreatePost = `subscription OnCreatePost {
   onCreatePost {
     id
-    title
     body
+    createdBy {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
     createdAt
   }
 }
@@ -13,8 +27,22 @@ export const onCreatePost = `subscription OnCreatePost {
 export const onUpdatePost = `subscription OnUpdatePost {
   onUpdatePost {
     id
-    title
     body
+    createdBy {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
     createdAt
   }
 }
@@ -22,8 +50,22 @@ export const onUpdatePost = `subscription OnUpdatePost {
 export const onDeletePost = `subscription OnDeletePost {
   onDeletePost {
     id
-    title
     body
+    createdBy {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
     createdAt
   }
 }
@@ -31,29 +73,19 @@ export const onDeletePost = `subscription OnDeletePost {
 export const onCreateConversation = `subscription OnCreateConversation {
   onCreateConversation {
     id
+    contents {
+      items {
+        id
+        body
+        createdAt
+      }
+      nextToken
+    }
     users {
-      id
-      name
-      password
-      createdAt
-      conversations {
+      items {
         id
       }
-    }
-    content {
-      id
-      title
-      body
-      createdAt
-    }
-    createdBy {
-      id
-      name
-      password
-      createdAt
-      conversations {
-        id
-      }
+      nextToken
     }
   }
 }
@@ -61,29 +93,19 @@ export const onCreateConversation = `subscription OnCreateConversation {
 export const onUpdateConversation = `subscription OnUpdateConversation {
   onUpdateConversation {
     id
+    contents {
+      items {
+        id
+        body
+        createdAt
+      }
+      nextToken
+    }
     users {
-      id
-      name
-      password
-      createdAt
-      conversations {
+      items {
         id
       }
-    }
-    content {
-      id
-      title
-      body
-      createdAt
-    }
-    createdBy {
-      id
-      name
-      password
-      createdAt
-      conversations {
-        id
-      }
+      nextToken
     }
   }
 }
@@ -91,28 +113,108 @@ export const onUpdateConversation = `subscription OnUpdateConversation {
 export const onDeleteConversation = `subscription OnDeleteConversation {
   onDeleteConversation {
     id
+    contents {
+      items {
+        id
+        body
+        createdAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onCreateUserConvo = `subscription OnCreateUserConvo {
+  onCreateUserConvo {
+    id
+    conversation {
+      id
+      contents {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+    }
     users {
       id
       name
       password
       createdAt
-      conversations {
+      friends {
         id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
       }
     }
-    content {
+  }
+}
+`;
+export const onUpdateUserConvo = `subscription OnUpdateUserConvo {
+  onUpdateUserConvo {
+    id
+    conversation {
       id
-      title
-      body
-      createdAt
+      contents {
+        nextToken
+      }
+      users {
+        nextToken
+      }
     }
-    createdBy {
+    users {
       id
       name
       password
       createdAt
-      conversations {
+      friends {
         id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const onDeleteUserConvo = `subscription OnDeleteUserConvo {
+  onDeleteUserConvo {
+    id
+    conversation {
+      id
+      contents {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+    }
+    users {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
       }
     }
   }
@@ -124,26 +226,26 @@ export const onCreateUser = `subscription OnCreateUser {
     name
     password
     createdAt
-    conversations {
+    friends {
       id
-      users {
+      name
+      password
+      createdAt
+      friends {
         id
         name
         password
         createdAt
       }
-      content {
-        id
-        title
-        body
-        createdAt
+      conversations {
+        nextToken
       }
-      createdBy {
+    }
+    conversations {
+      items {
         id
-        name
-        password
-        createdAt
       }
+      nextToken
     }
   }
 }
@@ -154,26 +256,26 @@ export const onUpdateUser = `subscription OnUpdateUser {
     name
     password
     createdAt
-    conversations {
+    friends {
       id
-      users {
+      name
+      password
+      createdAt
+      friends {
         id
         name
         password
         createdAt
       }
-      content {
-        id
-        title
-        body
-        createdAt
+      conversations {
+        nextToken
       }
-      createdBy {
+    }
+    conversations {
+      items {
         id
-        name
-        password
-        createdAt
       }
+      nextToken
     }
   }
 }
@@ -184,26 +286,26 @@ export const onDeleteUser = `subscription OnDeleteUser {
     name
     password
     createdAt
-    conversations {
+    friends {
       id
-      users {
+      name
+      password
+      createdAt
+      friends {
         id
         name
         password
         createdAt
       }
-      content {
-        id
-        title
-        body
-        createdAt
+      conversations {
+        nextToken
       }
-      createdBy {
+    }
+    conversations {
+      items {
         id
-        name
-        password
-        createdAt
       }
+      nextToken
     }
   }
 }

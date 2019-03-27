@@ -15,7 +15,6 @@ export const TypeBox = () => {
   // Send assigns Msg state and sends it to DB....
   const send = async () => {
     const postDeets = {
-      title: "Msg1",
       body: message,
       createdAt: ""
     };

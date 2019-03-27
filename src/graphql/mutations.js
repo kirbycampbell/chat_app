@@ -4,8 +4,22 @@
 export const createPost = `mutation CreatePost($input: CreatePostInput!) {
   createPost(input: $input) {
     id
-    title
     body
+    createdBy {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
     createdAt
   }
 }
@@ -13,8 +27,22 @@ export const createPost = `mutation CreatePost($input: CreatePostInput!) {
 export const updatePost = `mutation UpdatePost($input: UpdatePostInput!) {
   updatePost(input: $input) {
     id
-    title
     body
+    createdBy {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
     createdAt
   }
 }
@@ -22,8 +50,22 @@ export const updatePost = `mutation UpdatePost($input: UpdatePostInput!) {
 export const deletePost = `mutation DeletePost($input: DeletePostInput!) {
   deletePost(input: $input) {
     id
-    title
     body
+    createdBy {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
     createdAt
   }
 }
@@ -31,29 +73,19 @@ export const deletePost = `mutation DeletePost($input: DeletePostInput!) {
 export const createConversation = `mutation CreateConversation($input: CreateConversationInput!) {
   createConversation(input: $input) {
     id
+    contents {
+      items {
+        id
+        body
+        createdAt
+      }
+      nextToken
+    }
     users {
-      id
-      name
-      password
-      createdAt
-      conversations {
+      items {
         id
       }
-    }
-    content {
-      id
-      title
-      body
-      createdAt
-    }
-    createdBy {
-      id
-      name
-      password
-      createdAt
-      conversations {
-        id
-      }
+      nextToken
     }
   }
 }
@@ -61,29 +93,19 @@ export const createConversation = `mutation CreateConversation($input: CreateCon
 export const updateConversation = `mutation UpdateConversation($input: UpdateConversationInput!) {
   updateConversation(input: $input) {
     id
+    contents {
+      items {
+        id
+        body
+        createdAt
+      }
+      nextToken
+    }
     users {
-      id
-      name
-      password
-      createdAt
-      conversations {
+      items {
         id
       }
-    }
-    content {
-      id
-      title
-      body
-      createdAt
-    }
-    createdBy {
-      id
-      name
-      password
-      createdAt
-      conversations {
-        id
-      }
+      nextToken
     }
   }
 }
@@ -91,28 +113,108 @@ export const updateConversation = `mutation UpdateConversation($input: UpdateCon
 export const deleteConversation = `mutation DeleteConversation($input: DeleteConversationInput!) {
   deleteConversation(input: $input) {
     id
+    contents {
+      items {
+        id
+        body
+        createdAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const createUserConvo = `mutation CreateUserConvo($input: CreateUserConvoInput!) {
+  createUserConvo(input: $input) {
+    id
+    conversation {
+      id
+      contents {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+    }
     users {
       id
       name
       password
       createdAt
-      conversations {
+      friends {
         id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
       }
     }
-    content {
+  }
+}
+`;
+export const updateUserConvo = `mutation UpdateUserConvo($input: UpdateUserConvoInput!) {
+  updateUserConvo(input: $input) {
+    id
+    conversation {
       id
-      title
-      body
-      createdAt
+      contents {
+        nextToken
+      }
+      users {
+        nextToken
+      }
     }
-    createdBy {
+    users {
       id
       name
       password
       createdAt
-      conversations {
+      friends {
         id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const deleteUserConvo = `mutation DeleteUserConvo($input: DeleteUserConvoInput!) {
+  deleteUserConvo(input: $input) {
+    id
+    conversation {
+      id
+      contents {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+    }
+    users {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
       }
     }
   }
@@ -124,26 +226,26 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
     name
     password
     createdAt
-    conversations {
+    friends {
       id
-      users {
+      name
+      password
+      createdAt
+      friends {
         id
         name
         password
         createdAt
       }
-      content {
-        id
-        title
-        body
-        createdAt
+      conversations {
+        nextToken
       }
-      createdBy {
+    }
+    conversations {
+      items {
         id
-        name
-        password
-        createdAt
       }
+      nextToken
     }
   }
 }
@@ -154,26 +256,26 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
     name
     password
     createdAt
-    conversations {
+    friends {
       id
-      users {
+      name
+      password
+      createdAt
+      friends {
         id
         name
         password
         createdAt
       }
-      content {
-        id
-        title
-        body
-        createdAt
+      conversations {
+        nextToken
       }
-      createdBy {
+    }
+    conversations {
+      items {
         id
-        name
-        password
-        createdAt
       }
+      nextToken
     }
   }
 }
@@ -184,26 +286,26 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
     name
     password
     createdAt
-    conversations {
+    friends {
       id
-      users {
+      name
+      password
+      createdAt
+      friends {
         id
         name
         password
         createdAt
       }
-      content {
-        id
-        title
-        body
-        createdAt
+      conversations {
+        nextToken
       }
-      createdBy {
+    }
+    conversations {
+      items {
         id
-        name
-        password
-        createdAt
       }
+      nextToken
     }
   }
 }

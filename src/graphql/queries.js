@@ -4,8 +4,22 @@
 export const getPost = `query GetPost($id: ID!) {
   getPost(id: $id) {
     id
-    title
     body
+    createdBy {
+      id
+      name
+      password
+      createdAt
+      friends {
+        id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
+      }
+    }
     createdAt
   }
 }
@@ -18,8 +32,13 @@ export const listPosts = `query ListPosts(
   listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      title
       body
+      createdBy {
+        id
+        name
+        password
+        createdAt
+      }
       createdAt
     }
     nextToken
@@ -29,29 +48,19 @@ export const listPosts = `query ListPosts(
 export const getConversation = `query GetConversation($id: ID!) {
   getConversation(id: $id) {
     id
+    contents {
+      items {
+        id
+        body
+        createdAt
+      }
+      nextToken
+    }
     users {
-      id
-      name
-      password
-      createdAt
-      conversations {
+      items {
         id
       }
-    }
-    content {
-      id
-      title
-      body
-      createdAt
-    }
-    createdBy {
-      id
-      name
-      password
-      createdAt
-      conversations {
-        id
-      }
+      nextToken
     }
   }
 }
@@ -64,23 +73,11 @@ export const listConversations = `query ListConversations(
   listConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      contents {
+        nextToken
+      }
       users {
-        id
-        name
-        password
-        createdAt
-      }
-      content {
-        id
-        title
-        body
-        createdAt
-      }
-      createdBy {
-        id
-        name
-        password
-        createdAt
+        nextToken
       }
     }
     nextToken
@@ -93,26 +90,26 @@ export const getUser = `query GetUser($id: ID!) {
     name
     password
     createdAt
-    conversations {
+    friends {
       id
-      users {
+      name
+      password
+      createdAt
+      friends {
         id
         name
         password
         createdAt
       }
-      content {
-        id
-        title
-        body
-        createdAt
+      conversations {
+        nextToken
       }
-      createdBy {
+    }
+    conversations {
+      items {
         id
-        name
-        password
-        createdAt
       }
+      nextToken
     }
   }
 }
@@ -128,8 +125,14 @@ export const listUsers = `query ListUsers(
       name
       password
       createdAt
-      conversations {
+      friends {
         id
+        name
+        password
+        createdAt
+      }
+      conversations {
+        nextToken
       }
     }
     nextToken
