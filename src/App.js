@@ -12,8 +12,6 @@ import { SignUp } from "./Components/SignUp";
 
 Amplify.configure(awsmobile);
 var bcrypt = require("bcryptjs");
-//var salt = bcrypt.genSaltSync(10);
-//var hash = bcrypt.hashSync("B4c0//", salt);
 
 // OuterMost Layer for the App Management
 const App = () => {
@@ -32,7 +30,7 @@ const App = () => {
   };
 
   // AUTHORIZING USER BELOW
-  const authUser = user => {
+  const authUser = (user, pwd) => {
     // Query DB for USER
     const searchUser = async () => {
       const findUser = await API.graphql(
@@ -42,17 +40,19 @@ const App = () => {
         })
       );
       const signedInUser = findUser.data.listUsers.items[0];
-      if (
-        signedInUser.name === user.name &&
-        signedInUser.password === user.password
-      ) {
-        setUser(signedInUser);
-        setAuth(true);
-        setSignUp(false);
-        console.log("Signup Successful");
-      } else {
-        console.log("Sign Up Failed");
-      }
+      bcrypt.compare(pwd, signedInUser.password).then(isMatch => {
+        if (isMatch && signedInUser.name === user.name) {
+          console.log("AUTHORIZED");
+          setUser(signedInUser);
+          setAuth(true);
+          setSignUp(false);
+          console.log("Signup Successful");
+        } else if (!isMatch && signedInUser.name === user.name) {
+          console.log("Password INCORRECT!");
+        } else {
+          console.log("NOT MATCHED");
+        }
+      });
     };
     searchUser();
   };
@@ -69,7 +69,7 @@ const App = () => {
   };
   // Fake DB Save of hash created above
   const hashedmr =
-    "$2a$10$T11M0zKZJhUuUIdxiTJ5S.o5n0.4/nZVHxpEvVBGctQMwUgl69iYG";
+    "$2a$10$p2NdC11iQ1gdY/HY3QP8SOWpRIqlZGARvdZdukH6D3QfaEvnJtsKG";
 
   // Test Function for comparing password hashes - correct password is sent in on btn
   const checkPWD = myPW => {
