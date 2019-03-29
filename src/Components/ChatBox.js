@@ -7,25 +7,49 @@ import "../Css/ChatBox.css";
 
 export const ChatBox = props => {
   const [conversation, setConversation] = useState([]);
+  const [convoId, setConvoId] = useState(null);
 
   // useEffect Queries for Messages, and subscribes to new Msgs.
   useEffect(() => {
     if (props.selectedConvo) {
       //queryMsgs();
       //subscriptionMsgs();
-      createConvo();
+      //createConvo();
+      createConvo2();
     }
   }, [props.selectedConvo]);
 
   const createConvo = async () => {
-    let newConvo = {
-      contents: [{ body: "Start your Convo Here:", createdAt: "" }]
-    };
     let result = await API.graphql(
-      graphqlOperation(mutations.createConversation, { input: newConvo })
+      graphqlOperation(mutations.createConversation, { input: {} })
     );
-    console.log(result);
+    setConvoId(result.data.createConversation.id);
   };
+
+  const createConvo2 = async () => {
+    let updatedConvo = await API.graphql(
+      graphqlOperation(mutations.createConversation, {
+        input: {
+          //users: [{ id: props.selectedConvo }, { id: props.user.id }],
+          contents: []
+        }
+      })
+    );
+    console.log(updatedConvo);
+  };
+
+  // // Send assigns Msg state and sends it to DB....
+  // const send = async () => {
+  //   const postDeets = {
+  //     body: message,
+  //     createdAt: ""
+  //   };
+  //   await API.graphql(
+  //     graphqlOperation(mutations.createPost, { input: postDeets })
+  //   );
+  //   // Resets Message form to empty...
+  //   setMessage("");
+  // };
 
   // queryMsgs queries the DB for all Msgs
   const queryMsgs = async () => {
