@@ -1,4 +1,4 @@
 {
-    "AppSyncApiName": "chatAppAPI",
+    "AppSyncApiName": "chatAPIapp",
     "DynamoDBBillingMode": "PAY_PER_REQUEST"
 }

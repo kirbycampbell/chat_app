@@ -14,8 +14,8 @@ export const ChatBox = props => {
     if (props.selectedConvo) {
       //queryMsgs();
       //subscriptionMsgs();
-      //createConvo();
-      createConvo2();
+      createConvo();
+      //createConvo2();
     }
   }, [props.selectedConvo]);
 
@@ -24,6 +24,7 @@ export const ChatBox = props => {
       graphqlOperation(mutations.createConversation, { input: {} })
     );
     setConvoId(result.data.createConversation.id);
+    console.log(result.data.createConversation.id);
   };
 
   const createConvo2 = async () => {
